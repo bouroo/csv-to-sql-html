@@ -258,7 +258,7 @@
         }
 
         function sanitizeColumnNames(columnNames) {
-            return columnNames.map(name => name.replace(/[^\w]+/g, '_'));
+            return columnNames.map(name => name.replace(/[^\w]+/g, ''));
         }
 
         function sanitizeTableName(tableName) {
