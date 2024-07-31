@@ -15,6 +15,7 @@
     <meta property="og:type" content="website">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         /* Existing styles remain unchanged */
         body {
@@ -150,6 +151,25 @@
             background-color: #218838;
         }
 
+        /* GitHub link styles */
+        .github-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 16px;
+            display: flex;
+            align-items: center; /* Align icon and text */
+            transition: color 0.3s;
+        }
+
+        .github-link:hover {
+            color: #0056b3;
+        }
+
+        .github-link i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
         /* Responsive styles */
         @media (max-width: 600px) {
             body {
@@ -176,6 +196,9 @@
         <div class="loading" id="loading">
             <div class="spinner"></div>
         </div>
+        <a href="https://github.com/bouroo/csv-to-sql-html" class="github-link" target="_blank">
+            <i class="fab fa-github"></i> View on GitHub
+        </a>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
