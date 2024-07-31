@@ -220,7 +220,7 @@
                 queries.push(query);
             }
 
-            // Split queries into batches of 200 with BEGIN and COMMIT
+            // Split queries into batches of 200 with START TRANSACTION and COMMIT
             return splitIntoBatches(queries, 200);
         }
 
@@ -228,7 +228,7 @@
             const batches = [];
             for (let i = 0; i < queries.length; i += batchSize) {
                 const batch = queries.slice(i, i + batchSize);
-                const transactionBatch = `BEGIN;\n${batch.join('\n')}\nCOMMIT;`;
+                const transactionBatch = `START TRANSACTION;\n${batch.join('\n')}\nCOMMIT;`;
                 batches.push(transactionBatch);
             }
             return batches;
