@@ -203,7 +203,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
+    <script lang="javascript">
         /**
          * Handles the form submission, reads the CSV file, converts it to SQL,
          * and updates the output element.
@@ -279,12 +279,18 @@
         }
     
         /**
-         * Sanitizes column names by removing invalid characters.
+         * Sanitizes column names by converting them to snake_case.
          * @param {string[]} columnNames - An array of column names.
-         * @returns {string[]} An array of sanitized column names.
+         * @returns {string[]} An array of sanitized column names in snake_case.
          */
         function sanitizeColumnNames(columnNames) {
-            return columnNames.map(name => name.replace(/[^\w]+/g, ''));
+            return columnNames.map(name => {
+                return name
+                    .replace(/[^\w\s]+/g, '') // Remove non-word characters except whitespace
+                    .trim()                   // Trim whitespace
+                    .replace(/\s+/g, '_')     // Replace spaces with underscores
+                    .toLowerCase();           // Convert to lowercase
+            });
         }
     
         /**
