@@ -204,37 +204,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script>
+        /**
+         * Handles the form submission, reads the CSV file, converts it to SQL,
+         * and updates the output element.
+         * @param {Event} event - The submit event from the form.
+         */
         document.getElementById('upload-form').addEventListener('submit', async (event) => {
             event.preventDefault();
+            
             const fileInput = document.getElementById('csv-file');
-            const file = fileInput.files[0];
             const loadingElement = document.getElementById('loading');
-
+            const outputElement = document.getElementById('output');
+    
             // Show loading animation
             loadingElement.style.display = 'block';
-
-            const text = await file.text();
-            const queries = convertCsvToSql(text, file.name);
-            
-            // Insert the SQL into the output element with the appropriate class for Prism.js
-            const outputElement = document.getElementById('output');
-            outputElement.textContent = queries.join('\n');
-            Prism.highlightElement(outputElement); // Highlight the new content
-
-            // Hide loading animation
-            loadingElement.style.display = 'none';
+    
+            try {
+                const file = fileInput.files[0];
+                const text = await file.text();
+                const queries = convertCsvToSql(text, file.name);
+    
+                // Insert the SQL into the output element with the appropriate class for Prism.js
+                outputElement.textContent = queries.join('\n');
+                Prism.highlightElement(outputElement); // Highlight the new content
+            } catch (error) {
+                console.error("Error processing file:", error);
+                alert("There was an error processing the file. Please try again.");
+            } finally {
+                // Hide loading animation
+                loadingElement.style.display = 'none';
+            }
         });
-
+    
+        /**
+         * Converts CSV text to SQL insert statements.
+         * @param {string} csvText - The text content of the CSV file.
+         * @param {string} fileName - The name of the CSV file.
+         * @returns {string[]} An array of SQL insert statements.
+         */
         function convertCsvToSql(csvText, fileName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             const columnNames = sanitizeColumnNames(lines[0].split(','));
             const tableName = sanitizeTableName(fileName.replace('.csv', ''));
-
+    
             const queries = [];
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',').map(value => {
-                    return `'${escapeSingleQuotes(value.trim())}'`; // Add quotes around each value
-                });
+            for (const line of lines.slice(1)) {
+                const values = line.split(',').map(value => `'${escapeSingleQuotes(value.trim())}'`);
                 if (values.length !== columnNames.length) {
                     console.warn('Record length does not match column length. Skipping record.');
                     continue;
@@ -242,37 +257,61 @@
                 const query = `INSERT INTO ${tableName} (${columnNames.join(', ')}) VALUES (${values.join(', ')});`;
                 queries.push(query);
             }
-
+    
             // Split queries into batches of 200 with START TRANSACTION and COMMIT
             return splitIntoBatches(queries, 200);
         }
-
+    
+        /**
+         * Splits SQL queries into batches with transaction statements.
+         * @param {string[]} queries - An array of SQL queries.
+         * @param {number} batchSize - The size of each batch.
+         * @returns {string[]} An array of batched SQL queries.
+         */
         function splitIntoBatches(queries, batchSize) {
-            const batches = [];
-            for (let i = 0; i < queries.length; i += batchSize) {
-                const batch = queries.slice(i, i + batchSize);
-                const transactionBatch = `START TRANSACTION;\n${batch.join('\n')}\nCOMMIT;`;
-                batches.push(transactionBatch);
-            }
-            return batches;
+            return queries.reduce((batches, _, index) => {
+                if (index % batchSize === 0) {
+                    batches.push([]);
+                }
+                batches[batches.length - 1].push(queries[index]);
+                return batches;
+            }, []).map(batch => `START TRANSACTION;\n${batch.join('\n')}\nCOMMIT;`);
         }
-
+    
+        /**
+         * Sanitizes column names by removing invalid characters.
+         * @param {string[]} columnNames - An array of column names.
+         * @returns {string[]} An array of sanitized column names.
+         */
         function sanitizeColumnNames(columnNames) {
             return columnNames.map(name => name.replace(/[^\w]+/g, ''));
         }
-
+    
+        /**
+         * Sanitizes a table name by replacing invalid characters with underscores.
+         * @param {string} tableName - The name of the table.
+         * @returns {string} A sanitized table name.
+         */
         function sanitizeTableName(tableName) {
             return tableName.replace(/[^\w]+/g, '_');
         }
-
+    
+        /**
+         * Escapes single quotes in a string for SQL compatibility.
+         * @param {string} value - The string to escape.
+         * @returns {string} The escaped string.
+         */
         function escapeSingleQuotes(value) {
             return value.replace(/'/g, "''");
         }
-
+    
+        /**
+         * Copies the SQL output to the clipboard and provides user feedback.
+         */
         document.getElementById('copy-button').addEventListener('click', () => {
             const outputElement = document.getElementById('output');
             const textToCopy = outputElement.textContent;
-
+    
             // Create a temporary textarea element to hold the text to copy
             const tempTextArea = document.createElement('textarea');
             tempTextArea.value = textToCopy;
@@ -280,10 +319,11 @@
             tempTextArea.select();
             document.execCommand('copy');
             document.body.removeChild(tempTextArea);
-
+    
             // Provide feedback to the user
             alert("SQL output copied to clipboard!");
         });
     </script>
+    
 </body>
 </html>
