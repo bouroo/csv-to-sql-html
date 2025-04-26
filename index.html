@@ -17,7 +17,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        /* General Body and Layout */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f4f4;
@@ -26,7 +25,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Ensure body takes at least full viewport height */
+            min-height: 100vh;
         }
 
         h1 {
@@ -39,43 +38,39 @@
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 30px; /* Increased padding */
-            width: 100%; /* Use 100% width within max-width */
-            max-width: 900px; /* Increased max-width for better layout on larger screens */
-            box-sizing: border-box; /* Include padding in width */
-            position: relative; /* Needed for absolute positioning of loading spinner */
+            padding: 30px;
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+            position: relative;
         }
 
-        /* Responsive Container Width */
         @media (min-width: 768px) {
             .container {
                 padding: 40px;
             }
         }
 
-        /* File Input Styling */
         .file-input-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            margin-bottom: 30px; /* Space below file input */
+            margin-bottom: 30px;
         }
 
-        /* Hide the default file input */
         input[type="file"] {
             display: none;
         }
 
-        /* Style the custom file upload label */
         .custom-file-upload {
             display: inline-block;
-            padding: 12px 20px; /* Increased padding */
+            padding: 12px 20px;
             background-color: #007BFF;
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 18px; /* Increased font size */
+            font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.1s ease;
             text-align: center;
@@ -86,14 +81,13 @@
         }
 
         .custom-file-upload:active {
-             transform: scale(0.98); /* Add a slight press effect */
+             transform: scale(0.98);
         }
 
         .custom-file-upload i {
             margin-right: 8px;
         }
 
-        /* Placeholder Message */
         #placeholder-message {
             text-align: center;
             color: #666;
@@ -105,82 +99,78 @@
             background-color: #f9f9f9;
         }
 
-        /* Output Section Styling */
         #output-section {
             margin-top: 20px;
         }
 
         #output-section h2 {
-            margin-top: 0; /* Remove default h2 top margin */
-            margin-bottom: 15px; /* Space below heading */
+            margin-top: 0;
+            margin-bottom: 15px;
             color: #333;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Space out heading and buttons */
-            flex-wrap: wrap; /* Allow wrapping on small screens */
-            gap: 10px; /* Space between items */
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         #output-section h2 span {
-             flex-grow: 1; /* Allow the text part to take available space */
+             flex-grow: 1;
         }
 
         .output-actions {
             display: flex;
-            gap: 10px; /* Space between buttons */
-            flex-wrap: wrap; /* Allow buttons to wrap */
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .output-actions button {
-             padding: 8px 15px; /* Adjust button padding */
-             font-size: 15px; /* Adjust button font size */
-             margin-top: 0; /* Remove default button margin */
+             padding: 8px 15px;
+             font-size: 15px;
+             margin-top: 0;
         }
 
-
-        /* Syntax highlighting styles */
         pre {
-            white-space: pre-wrap; /* Preserve whitespace */
-            word-wrap: break-word; /* Break long lines */
-            margin-top: 0; /* Remove default pre top margin */
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 0;
             font-family: monospace;
             border: 1px solid #ccc;
             border-radius: 4px;
-            padding: 15px; /* Increased padding */
+            padding: 15px;
             background: #f9f9f9;
-            max-height: 60vh; /* Adjusted max height */
+            max-height: 60vh;
             overflow-y: auto;
-            line-height: 1.4; /* Improved readability */
+            line-height: 1.4;
         }
 
         code {
-            display: block; /* Make the code element block level */
+            display: block;
         }
 
-        /* Loading spinner styles */
         .loading {
-            display: none; /* Initially hide the loading spinner */
+            display: none;
             position: absolute;
-            top: 0; /* Position relative to container */
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent overlay */
+            background-color: rgba(255, 255, 255, 0.8);
             z-index: 10;
-            justify-content: center; /* Center spinner */
-            align-items: center; /* Center spinner */
-            flex-direction: column; /* Stack spinner and text */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             gap: 15px;
             font-size: 1.2em;
             color: #333;
         }
 
         .loading .spinner {
-            border: 8px solid #f3f3f3; /* Light grey */
-            border-top: 8px solid #3498db; /* Blue */
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
             border-radius: 50%;
-            width: 50px; /* Increased size */
-            height: 50px; /* Increased size */
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
         }
 
@@ -189,9 +179,8 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Button Styles (Copy & Download) */
         .copy-button {
-            background-color: #28a745; /* Green */
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
@@ -204,8 +193,8 @@
         }
 
         .download-button {
-            background-color: #ffc107; /* Yellow */
-            color: #212529; /* Dark text */
+            background-color: #ffc107;
+            color: #212529;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -213,7 +202,7 @@
         }
 
         .download-button:hover {
-            background-color: #e0a800; /* Darker yellow */
+            background-color: #e0a800;
         }
 
         button:disabled {
@@ -221,8 +210,6 @@
             cursor: not-allowed;
         }
 
-
-        /* Feedback Messages */
         .feedback-message {
             margin-top: 15px;
             padding: 10px;
@@ -245,15 +232,14 @@
             border: 1px solid #f5c6cb;
         }
 
-        /* GitHub link styles */
         .github-link {
-            margin-top: 30px; /* More space above link */
+            margin-top: 30px;
             text-decoration: none;
             color: #007BFF;
             font-size: 16px;
             display: flex;
             align-items: center;
-            justify-content: center; /* Center the link */
+            justify-content: center;
             transition: color 0.3s;
         }
 
@@ -265,7 +251,6 @@
             margin-right: 8px;
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -281,20 +266,20 @@
             }
 
             #output-section h2 {
-                flex-direction: column; /* Stack heading and buttons */
-                align-items: flex-start; /* Align items to the start */
-                gap: 5px; /* Reduce gap */
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
             }
 
             .output-actions {
-                 flex-direction: column; /* Stack buttons */
-                 width: 100%; /* Make buttons take full width */
+                 flex-direction: column;
+                 width: 100%;
                  gap: 5px;
             }
 
              .output-actions button {
-                 width: 100%; /* Make buttons take full width */
-                 box-sizing: border-box; /* Include padding/border in width */
+                 width: 100%;
+                 box-sizing: border-box;
              }
 
              pre {
@@ -312,7 +297,6 @@
                  <i class="fas fa-cloud-upload-alt"></i> Choose CSV File
             </label>
             <input type="file" id="csv-file" accept=".csv" required />
-            <!-- Removed the Convert button -->
         </div>
 
         <div id="placeholder-message">Select a CSV file above to generate SQL INSERT statements.</div>
@@ -322,7 +306,7 @@
             <span>Converting...</span>
         </div>
 
-        <div id="output-section" style="display: none;"> <!-- Initially hidden -->
+        <div id="output-section" style="display: none;">
             <h2>
                 <span>SQL Output:</span>
                 <div class="output-actions">
@@ -333,7 +317,7 @@
             <pre><code id="output" class="language-sql"></code></pre>
         </div>
 
-        <div id="feedback-message" class="feedback-message" style="display: none;"></div> <!-- Unified feedback area -->
+        <div id="feedback-message" class="feedback-message" style="display: none;"></div>
 
         <a href="https://github.com/bouroo/csv-to-sql-html" class="github-link" target="_blank">
             <i class="fab fa-github"></i> View on GitHub
@@ -343,10 +327,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script lang="javascript">
-        // Store the original file name globally or pass it around if needed for download
-        let originalFileName = 'output'; // Default name
+        /**
+         * Stores the original file name globally or passes it around if needed for download.
+         * @type {string}
+         */
+        let originalFileName = 'output';
 
-        // Get references to key elements
+        /**
+         * Get references to key elements.
+         */
         const fileInput = document.getElementById('csv-file');
         const loadingElement = document.getElementById('loading');
         const outputElement = document.getElementById('output');
@@ -356,16 +345,21 @@
         const copyButton = document.getElementById('copy-button');
         const downloadButton = document.getElementById('download-button');
 
-        // --- Helper Functions for UI State Management ---
+        /**
+         * Shows the loading state UI.
+         */
         function showLoading() {
             placeholderMessage.style.display = 'none';
             outputSection.style.display = 'none';
             feedbackMessage.style.display = 'none';
-            loadingElement.style.display = 'flex'; // Use flex to center content
-            outputElement.textContent = ''; // Clear previous output
+            loadingElement.style.display = 'flex';
+            outputElement.textContent = '';
             disableButtons();
         }
 
+        /**
+         * Shows the output section UI.
+         */
         function showOutput() {
             loadingElement.style.display = 'none';
             placeholderMessage.style.display = 'none';
@@ -374,94 +368,92 @@
             enableButtons();
         }
 
+        /**
+         * Shows an error message and resets the UI.
+         * @param {string} message - The error message to display.
+         */
         function showError(message) {
             loadingElement.style.display = 'none';
             outputSection.style.display = 'none';
-            placeholderMessage.style.display = 'block'; // Show placeholder again on error
+            placeholderMessage.style.display = 'block';
             displayFeedback(message, 'error');
-            outputElement.textContent = ''; // Ensure output is clear
-            disableButtons(); // Buttons should be disabled if there's no output
+            outputElement.textContent = '';
+            disableButtons();
         }
 
+        /**
+         * Displays a feedback message to the user.
+         * @param {string} message - The message to display.
+         * @param {'success' | 'error'} [type='success'] - The type of feedback (success or error).
+         */
         function displayFeedback(message, type = 'success') {
             feedbackMessage.textContent = message;
-            feedbackMessage.className = `feedback-message ${type}`; // Set class for styling
+            feedbackMessage.className = `feedback-message ${type}`;
             feedbackMessage.style.display = 'block';
 
-            // Hide message after a few seconds (optional, but good for success)
             if (type === 'success') {
                  setTimeout(() => {
                      feedbackMessage.style.display = 'none';
-                 }, 4000); // Hide after 4 seconds
+                 }, 4000);
             }
         }
 
+        /**
+         * Disables the copy and download buttons.
+         */
         function disableButtons() {
             copyButton.disabled = true;
             downloadButton.disabled = true;
         }
 
+        /**
+         * Enables the copy and download buttons if there is output content.
+         */
         function enableButtons() {
-             // Only enable if there is content in the output area
              const hasOutput = outputElement.textContent.trim().length > 0;
              copyButton.disabled = !hasOutput;
              downloadButton.disabled = !hasOutput;
         }
 
-        // --- Core Conversion Logic (Same as before) ---
-
         /**
          * Converts CSV text to SQL insert statements.
          * @param {string} csvText - The text content of the CSV file.
          * @param {string} fileName - The name of the CSV file.
-         * @returns {string[]} An array of SQL insert statements.
+         * @returns {string[]} An array of SQL insert statements, batched with transactions.
          */
         function convertCsvToSql(csvText, fileName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             if (lines.length === 0) {
                  console.warn('CSV file is empty or contains only whitespace.');
-                 return []; // Return empty array if no data lines
+                 return [];
             }
             const columnNames = sanitizeColumnNames(lines[0].split(','));
             const tableName = sanitizeTableName(fileName.replace('.csv', ''));
 
             const queries = [];
-            // Start from the second line (index 1) to skip the header
             for (const line of lines.slice(1)) {
-                // Handle potential empty lines at the end of the file after slice(1)
                 if (line.trim() === '') continue;
 
-                // Split the line, process each value
-                // A more robust CSV parser might be needed for complex cases (commas/quotes within fields)
-                // This simple split works for basic comma-separated values.
                 const values = line.split(',').map(value => {
-                    let processedValue = value.trim(); // Trim whitespace
+                    let processedValue = value.trim();
 
-                    // Check if the trimmed value is enclosed in double quotes and remove them
                     if (processedValue.length >= 2 && processedValue.startsWith('"') && processedValue.endsWith('"')) {
                         processedValue = processedValue.substring(1, processedValue.length - 1);
                     }
 
-                    // Escape single quotes within the processed value
                     const escapedValue = escapeSingleQuotes(processedValue);
 
-                    // Wrap the final value in single quotes for the SQL string literal
                     return `'${escapedValue}'`;
                 });
 
-                 // Basic check: ensure the number of values matches the number of columns
-                 // This is a simple check and might not handle complex CSVs (e.g., with commas in quoted fields)
                 if (values.length !== columnNames.length) {
                     console.warn(`Skipping record due to column mismatch. Expected ${columnNames.length}, got ${values.length}. Line: "${line}"`);
-                    // Optionally, display a warning message to the user about skipped lines
-                    // displayFeedback(`Warning: Skipped a row due to column mismatch.`, 'error'); // Or a dedicated warning type
-                    continue; // Skip this line if column count doesn't match
+                    continue;
                 }
                 const query = `INSERT INTO ${tableName} (${columnNames.join(', ')}) VALUES (${values.join(', ')});`;
                 queries.push(query);
             }
 
-            // Split queries into batches of 200 with START TRANSACTION and COMMIT
             return splitIntoBatches(queries, 200);
         }
 
@@ -473,7 +465,7 @@
          */
         function splitIntoBatches(queries, batchSize) {
              if (queries.length === 0) {
-                 return []; // Return empty array if no queries
+                 return [];
              }
             const batchedQueries = queries.reduce((batches, query, index) => {
                 if (index % batchSize === 0) {
@@ -495,50 +487,35 @@
         function sanitizeColumnNames(columnNames) {
             return columnNames.map(name => {
                 return name
-                    .replace(/[^\w\s]+/g, '') // Remove non-word characters except whitespace
-                    .trim()                   // Trim whitespace
-                    .replace(/\s+/g, '_')     // Replace spaces with underscores
-                    .toLowerCase();           // Convert to lowercase
+                    .replace(/[^\w\s]+/g, '')
+                    .trim()
+                    .replace(/\s+/g, '_')
+                    .toLowerCase();
             });
         }
 
         /**
          * Sanitizes a table name by replacing invalid characters with underscores.
+         * Removes leading/trailing underscores.
          * @param {string} tableName - The name of the table.
          * @returns {string} A sanitized table name.
          */
         function sanitizeTableName(tableName) {
-            // Remove leading/trailing underscores that might result from sanitization
             return tableName.replace(/[^\w]+/g, '_').replace(/^_+|_+$/g, '');
         }
 
         /**
          * Escapes single quotes in a string for SQL compatibility by doubling them.
-         * @param {string} value - The string to escape.
-         * @returns {string} The escaped string.
+         * Treats empty or whitespace-only strings as SQL NULL.
+         * @param {string | any} value - The string or value to escape.
+         * @returns {string} The escaped string or 'NULL'.
          */
         function escapeSingleQuotes(value) {
-            // Handle null/undefined or non-string values gracefully
-            if (typeof value !== 'string') {
-                // Decide how non-string values should be represented in SQL.
-                // 'NULL' is common for empty/null, numbers can be left unquoted.
-                // For simplicity here, we'll return 'NULL' for empty/whitespace strings
-                // and just stringify others, but this might need refinement
-                // based on expected data types.
-                 if (value === null || value === undefined || String(value).trim() === '') {
-                     return 'NULL'; // Represent empty/null as SQL NULL
-                 }
-                 // If it looks like a number, maybe don't quote it?
-                 // This adds complexity. Sticking to quoting everything as strings for now.
-                 return String(value).replace(/'/g, "''");
+            if (typeof value !== 'string' || String(value).trim() === '') {
+                 return 'NULL';
             }
-             if (value.trim() === '') {
-                 return 'NULL'; // Treat empty/whitespace strings as SQL NULL
-             }
             return value.replace(/'/g, "''");
         }
-
-        // --- Event Listeners ---
 
         /**
          * Handles file selection, triggers conversion.
@@ -546,7 +523,6 @@
         fileInput.addEventListener('change', async (event) => {
             const file = event.target.files[0];
             if (!file) {
-                // User cancelled file selection
                 placeholderMessage.style.display = 'block';
                 outputSection.style.display = 'none';
                 feedbackMessage.style.display = 'none';
@@ -556,30 +532,27 @@
                 return;
             }
 
-            showLoading(); // Show loading state
+            showLoading();
 
             try {
-                originalFileName = file.name.replace(/\.[^/.]+$/, "") || 'output'; // Store filename without extension
+                originalFileName = file.name.replace(/\.[^/.]+$/, "") || 'output';
                 const text = await file.text();
                 const queries = convertCsvToSql(text, file.name);
 
                 if (queries.length === 0) {
                     showError("No valid data rows found in the CSV after the header.");
                 } else {
-                    // Insert the SQL into the output element
                     outputElement.textContent = queries.join('\n');
-                    Prism.highlightElement(outputElement); // Highlight the new content
-                    showOutput(); // Show output section
+                    Prism.highlightElement(outputElement);
+                    showOutput();
                 }
 
             } catch (error) {
                 console.error("Error processing file:", error);
                 showError(`Error processing file: ${error.message || error}`);
             } finally {
-                // Loading is hidden by showError or showOutput
             }
         });
-
 
         /**
          * Copies the SQL output to the clipboard and provides user feedback.
@@ -587,12 +560,11 @@
         copyButton.addEventListener('click', () => {
             const textToCopy = outputElement.textContent;
 
-            if (!textToCopy.trim()) { // Check if output is empty or just whitespace
+            if (!textToCopy.trim()) {
                  displayFeedback("No SQL output to copy.", 'error');
                  return;
             }
 
-            // Use the modern Clipboard API if available
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(textToCopy).then(() => {
                     displayFeedback("SQL output copied to clipboard!", 'success');
@@ -601,10 +573,8 @@
                     displayFeedback("Failed to copy SQL output. Please copy manually.", 'error');
                 });
             } else {
-                // Fallback for older browsers
                 const tempTextArea = document.createElement('textarea');
                 tempTextArea.value = textToCopy;
-                // Make the textarea invisible and outside the viewport
                 tempTextArea.style.position = 'absolute';
                 tempTextArea.style.left = '-9999px';
                 tempTextArea.style.top = '0';
@@ -628,39 +598,34 @@
         downloadButton.addEventListener('click', () => {
             const textToSave = outputElement.textContent;
 
-            if (!textToSave.trim()) { // Check if output is empty or just whitespace
+            if (!textToSave.trim()) {
                 displayFeedback("No SQL output to download.", 'error');
                 return;
             }
 
-            // Create a Blob from the text content
-            const blob = new Blob([textToSave], { type: 'text/sql' }); // Use text/sql MIME type
+            const blob = new Blob([textToSave], { type: 'text/sql' });
 
-            // Create a temporary anchor element
             const a = document.createElement('a');
-            a.style.display = 'none'; // Hide the element
+            a.style.display = 'none';
 
-            // Create a URL for the blob
             const url = URL.createObjectURL(blob);
 
-            // Set the href and download attributes
             a.href = url;
-            // Use the original file name (sanitized) + .sql extension
-            a.download = `${sanitizeTableName(originalFileName) || 'output'}.sql`; // Fallback name
+            a.download = `${sanitizeTableName(originalFileName) || 'output'}.sql`;
 
-            // Append the anchor to the body and trigger the click
             document.body.appendChild(a);
             a.click();
 
-            // Clean up by revoking the object URL and removing the element
             setTimeout(() => {
                 URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-            }, 100); // Small delay to ensure download starts
+            }, 100);
         });
 
-        // --- Initial State ---
-        disableButtons(); // Disable buttons on page load
+        /**
+         * Initial state: Disable buttons on page load.
+         */
+        disableButtons();
     </script>
 
 </body>
